@@ -6,7 +6,8 @@
 
 # production
 /_test_
-/ios/build
+/ios/
+/android/
 
 # misc
 .DS_Store
