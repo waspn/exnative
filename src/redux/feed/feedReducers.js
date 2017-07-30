@@ -104,7 +104,7 @@ const feedReducers = (state = initialState, action) => {
 		return {
 			...state,
 			isFetching: false,
-			fetchError: true
+			fetchError: action.error
 
 		}
 		default: return state

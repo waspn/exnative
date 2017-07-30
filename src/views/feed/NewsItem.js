@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, TextInput, Button, TouchableOpacity, TouchableHighlight, Modal } from 'react-native'
+import { Text, View, TextInput, Button, TouchableOpacity, TouchableHighlight, Modal, FlatList } from 'react-native'
 import { styles } from '../../style'
 import NewsDetail from './NewsDetail'
 
@@ -62,22 +62,43 @@ class NewsList extends Component {
     }
 
     render() {
-        //let {content} = this.props
+        let {content} = this.props
         //console.log(content)
         return(
             <View>
-                <TouchableOpacity onPress={() => alert('Toggle')} onLongPress={()=>{this.setModalVisible(true)}}>
-                    <View style={styles.button}>
-                        <Text style={styles.topic}> Lorem Ipsum Plauw wafoabla</Text>
-                        <Text style={styles.description}> Koon zuloo, tammai Rao yungmai warp </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <Modal animationType={'slide'} transparent={false} visible={this.state.modalVisible} >
-                    <View style={styles.modal}>
-                        <NewsDetail /> 
-                        <Button onPress={() => {this.setModalVisible(!this.state.modalVisible)}} title="Hide Modal" />
-                    </View>
+                <FlatList
+                  onPress={() => alert('Toggle')} 
+                  data={[{key:1, topic: 'Lorem Ipsum Plauw wafoabla'}, {key:2, topic: 'Koon zuloo, tammai Rao yungmai warp'}]}
+                  renderItem={({item}) => 
+                    <TouchableOpacity style={styles.modal}
+                        onPress={() => alert(`Toggle ${item.topic}`)} 
+                        onLongPress={()=>{this.setModalVisible(true)}}
+                    >
+                      <View style={styles.button}>
+                        <Text style={styles.topic}> 
+                            {item.key}. {item.topic}
+                        </Text>
+                        <Text style={styles.description}> 
+                            Koon zuloo, tammai Rao yungmai warp
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  }
+                />
+                
+                <Modal 
+                  animationType={'slide'} 
+                  transparent={false} 
+                  visible={this.state.modalVisible}
+                  onRequestClose={() => {alert("Modal has been closed.")}}
+                >
+                  <View style={styles.modal}>
+                    <NewsDetail/> 
+                    <Button 
+                      onPress={() => {this.setModalVisible(!this.state.modalVisible)}} 
+                      title="Hide Modal" 
+                    />
+                  </View>
                 </Modal>
 
 

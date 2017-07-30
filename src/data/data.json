@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "newsid": 1,
+      "topic": "Feed Data",
+      "description": "Lorem ipsum vi calas opique"
+    },
+    {
+      "newsid": 2,
+      "topic": "Feed Dataaa",
+      "description": "um vi cLorem ipsiqu alas ope"
+    }
+  ],
+  "code": 200,
+  "status": "OK"
+}

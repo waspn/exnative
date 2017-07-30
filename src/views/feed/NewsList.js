@@ -18,17 +18,17 @@ class NewsList extends Component {
     }
     */
     render() {
-        //let {items, onEdit, onDelete} = this.props
+        let {items, onEdit, onDelete} = this.props
 
         return(
             <View>
-                <NewsItem />
-                {/*   items.map((newsfeed,i) => 
+                {/* <NewsItem /> */}
+                {items.map((newsfeed,i) => 
                     <Views key={i}>
                         <NewsItem content={newsfeed} edit={onEdit} remove={onDelete} />
                     </Views>
                     )
-                */}
+                }
             </View>
         )
     }

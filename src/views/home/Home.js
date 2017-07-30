@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { styles } from '../../style'
 
 const Home = () => {
   return(
     <View style={styles.container}>
-      <Text style={styles.header}>Welcome to REACT NATIVE</Text>
+      <Text style={styles.header}>Welcome to REACT NATIVE \0/</Text>
       
-      <Text>      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius erat nec cursus elementum. Nunc sagittis egestas nunc id convallis.</Text>
+      <Text>xLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius erat nec cursus elementum. Nunc sagittis egestas nunc id convallis.</Text>
       
-      <Button onPress={()=>Actions.login()} title="Login" />
-      <Button onPress={()=>Actions.feed()} title="Feed" />
-      <Button onPress={()=>Actions.about()} title="About" />
+      <TouchableOpacity onPress={()=>Actions.login()} style={styles.btn}>
+         <Text style={styles.btntext}>Login </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>Actions.feed()} style={styles.btn}>
+         <Text style={styles.btntext}>Feed </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>Actions.about()} style={styles.btn}>
+         <Text style={styles.btntext}>About </Text>
+      </TouchableOpacity>
     </View> 
   )
 }

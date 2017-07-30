@@ -1,3 +1,6 @@
+const internalpath = '../../data/data.json'
+const externalpath = 'http://localhost:3001/feed/'
+
 export const addFeedRequest = () => ({
   type: 'ADD_FEED_REQUEST'
 })
@@ -11,7 +14,7 @@ export const addFeedFailure = (error) => ({
 })
 export const addFeed = (payload) => (dispatch, getState) => {
   dispatch(addFeedRequest())
-  const url = 'http://localhost:3001/feed/create'
+  const url = externalpath + 'create'
   console.log(payload)
   fetch(url,{
     method: 'POST',
@@ -38,7 +41,7 @@ export const editFeedFailure = (error) => ({
 })
 export const editFeed = (payload) => (dispatch, getState) => {
   dispatch(editFeedRequest())
-  const url = 'http://localhost:3001/feed/update'
+  const url = externalpath + 'update'
   console.log(payload)
   fetch(url, {
     method: 'POST',
@@ -65,7 +68,7 @@ export const deleteFeedFailure = (error) => ({
 })
 export const deleteFeed = (key) => (dispatch, getState) => {
   dispatch(deleteFeedRequest())
-  const url = 'http://localhost:3001/feed/delete'
+  const url = externalpath + 'delete'
   console.log(key)
   fetch(url,{
     method: 'POST',
@@ -95,7 +98,8 @@ export const fetchFeedFailure = (error) => ({
 })
 export const fetchFeed = () => (dispatch, getState) => { 
     dispatch(fetchFeedRequest())
-    const url = 'http://localhost:3001/feed/data'
+    const url = externalpath + 'data'
+    console.log(url)
     fetch(url)
         .then((res) => res.json())
         .then((res) => dispatch(fetchFeedSuccess(res.data)))
