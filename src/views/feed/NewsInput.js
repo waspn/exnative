@@ -1,4 +1,11 @@
 import React, {Component}  from 'react'
+import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { Actions } from 'react-native-router-flux'
+
+import { styles } from '../../style'
+import * as feedActions from '../../redux/feed/feedActions'
 
 class NewsInput extends Component {
 
@@ -7,12 +14,9 @@ class NewsInput extends Component {
         this.state = {
             news: {
                 newsid: Date.now(),
-                topic: '',
-                description: '',
             }
         }
         this.clear = this.clear.bind(this)
-        this.handleChange = this.handleChange.bind(this)
         this.addFeed = this.addFeed.bind(this)
     }
 
@@ -25,42 +29,63 @@ class NewsInput extends Component {
         })
     }
 
-    handleChange = (propertyName, e) => {
+    /*handleChange = (propertyName, e) => {
         const {news} = this.state
-        news[propertyName] = e.target.value
+        news[propertyName] = e.target.defaultValue
         
         this.setState({
             news: news
         })
-    }
+    }*/
 
     addFeed() {
-        let {onOperation} = this.props
-        onOperation(this.state.news)
-        this.setState({
-            news: {
-                newsid: this.state.news.newsid + 1,
-                topic: '',
-                description: ''
-            }
-        })
+        console.log(this.state.news)
+        this.props.feedActions.addFeed(this.state.news)
+        
+        Actions.pop()
     }
-    
+ 
     render() {
         let {topic, description} = this.state.news
         return(
-            <Views>
-                <Text>Add 'News feed'</Text>
-                <input type='text' className='form-control' onChange={this.handleChange.bind(this,'topic')} value={topic} placeholder='Topic' />
-                <textarea className='form-control' onChange={this.handleChange.bind(this,'description')} value={description} placeholder='Description' rows='4'></textarea>
-                <br/>
-                <Views>
-                    <button onClick={this.clear} className='btn btn-warning'> Clear </button>
-                    <button onClick={this.addFeed} className='btn btn-success'> Add </button>
-                </Views>
-            </Views>
+            <View style={styles.container}>
+                <TextInput 
+                    placeholder='Topic' 
+                    autoFocus={true}
+                    onChangeText={(topic) => this.setState({
+                        news:{
+                            newsid: this.state.news.newsid,
+                            topic,
+                            description
+                        }
+                    })}
+                    value={this.state.news.topic} />
+                <TextInput 
+                    multiline = {true}
+                    numberOfLines = {4}
+                    placeholder='Description'
+                    onChangeText={(description) => this.setState({
+                        news:{
+                            newsid: this.state.news.newsid,
+                            topic,
+                            description
+                        }
+                    })}
+                    value={this.state.news.description} />
+
+                <View style={{flex:1,flexDirection:'row',alignItems:'flex-end', justifyContent:'space-around' }}>
+                    <Button onPress={this.clear}  title="Clear" />
+                    <Button onPress={this.addFeed} title="Add" />
+                </View>
+            </View>
         )
     }
 }
 
-export default NewsInput
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    feedActions: bindActionCreators(feedActions, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(NewsInput)

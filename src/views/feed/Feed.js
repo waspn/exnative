@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { View , Text } from 'react-native'
+import { View , Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Actions } from 'react-native-router-flux'
@@ -13,10 +13,6 @@ class Login extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            newsfeed: []
-        }
-        this.addNews = this.addNews.bind(this)
         this.editNews = this.editNews.bind(this)
         this.deleteNews = this.deleteNews.bind(this)
         this.fetchFeed = this.fetchFeed.bind(this)
@@ -26,10 +22,7 @@ class Login extends Component {
         this.fetchFeed()
     }
 
-    addNews(feed) {
-        this.props.feedActions.addFeed(feed)
-    }
-
+    
     editNews(feed) {
         this.props.feedActions.editFeed(feed)
     }
@@ -44,14 +37,19 @@ class Login extends Component {
 
     render() {
       const {feed} = this.props
-      console.log(feed)
       return(
         <View style={styles.container}>
+
           <Text style={styles.header}>News Feed</Text>
-          { feed.fetchError ? 
+
+          { feed.isFetchong ? <Text> Loading... </Text> : <Text></Text>}
+          { !feed.data.length ? 
             <Text> ERROR : Cannot fetch newsfeed </Text> : 
-            <NewsList items={feed.data}/> 
+            <NewsList items={feed} onRemove={this.deleteNews} /> 
           }
+
+					<Button onPress={()=>Actions.newsinput()} title="Add New Feed + " />
+
         </View> 
       )
     }

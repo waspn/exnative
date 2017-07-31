@@ -3,10 +3,14 @@ import { StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    margin: 20
+  },
+  detailContainer: {
+    justifyContent: 'center'
   },
   header: {
     fontSize: 25,
+    alignContent: 'center',
     paddingVertical: 2,
     borderBottomWidth: 2
   },
@@ -19,9 +23,22 @@ export const styles = StyleSheet.create({
     width:80
   },
   btnText: {
-    flex:2,
     alignContent: 'flex-end',
     color: 'white'
+  },
+  addbtn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    alignSelf: 'flex-end',
+    alignContent: 'flex-end',
+    backgroundColor: 'lightgreen',
+    width: 40,
+    height: 40,
+    borderRadius: 40
+  },
+  addbtnText:{
+    fontSize: 25
   },
 
   input: {
@@ -37,9 +54,10 @@ export const styles = StyleSheet.create({
 
   topic: {
     fontSize: 20,
+    
   },
   description: {
-    fontSize: 12
+    fontSize: 12,
   },
 
   modal: {

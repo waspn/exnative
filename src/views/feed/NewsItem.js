@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, TextInput, Button, TouchableOpacity, TouchableHighlight, Modal, FlatList } from 'react-native'
+import { Text, View, TextInput, Button, TouchableOpacity, TouchableHighlight, Alert, Modal, Dimensions } from 'react-native'
 import { styles } from '../../style'
 import NewsDetail from './NewsDetail'
 
@@ -12,20 +12,20 @@ class NewsList extends Component {
         let {content} = this.props
         this.state = {
             modalVisible: false,
-            /*isEditing: false,
+            isEditing: false,
             modified: {
                 newsid: content.newsid,
                 topic: '',
                 description: ''
-            }*/
-        }/*
+            }
+        }
         this.handleChange = this.handleChange.bind(this)
         this.toggleEditFeed = this.toggleEditFeed.bind(this)
         this.editFeed = this.editFeed.bind(this)
-        this.deleteFeed = this.deleteFeed.bind(this)*/
+        this.deleteFeed = this.deleteFeed.bind(this)
     }
     
-    /*
+    
     toggleEditFeed()  {
         this.setState({
             isEditing: !this.state.isEditing
@@ -53,7 +53,7 @@ class NewsList extends Component {
         let {remove,content} = this.props
         remove(content.newsid)
     }
-    */
+    
 
     setModalVisible(visible) {
         this.setState({
@@ -61,45 +61,77 @@ class NewsList extends Component {
         })
     }
 
+    actionSheet(id) {
+        const options = ['Edit', 'Delete', 'Cancel']
+        ActionSheetIOS.showActionSheetWithOptions({
+            options,
+            cancelButtonIndex: 2
+            },
+            (buttonIndex) => {
+                switch (buttonIndex) {
+                    case 0 : 
+                    return alert(options[buttonIndex])
+                    case 1 : 
+                    return this.deleteFeed(id)
+                }
+            }
+        )
+    }
+
+    activatePopupMenu(content) {
+        // Alert.alert(
+        //     'MENU',
+        //     [
+        //         {text: 'Edit', onPress: () => alert(options[buttonIndex])},
+        //         {text: 'Cancel' , style: 'cancel'},
+        //         {text: 'Delete', onPress: this.deleteFeed(id)}
+        //     ]
+        // )
+       Alert.alert(
+            '',
+            content.topic,
+            [
+                {text: 'Edit', onPress: () => alert('Ask me later pressed')},
+                {text: 'Cancel', style: 'cancel'},
+                {text: 'Delete', onPress: () => this.deleteFeed(content.id)},
+            ]
+        )
+    }
+
     render() {
+        let {height, width} = Dimensions.get('window')
         let {content} = this.props
-        //console.log(content)
+        console.log(content)
         return(
-            <View>
-                <FlatList
-                  onPress={() => alert('Toggle')} 
-                  data={[{key:1, topic: 'Lorem Ipsum Plauw wafoabla'}, {key:2, topic: 'Koon zuloo, tammai Rao yungmai warp'}]}
-                  renderItem={({item}) => 
-                    <TouchableOpacity style={styles.modal}
-                        onPress={() => alert(`Toggle ${item.topic}`)} 
-                        onLongPress={()=>{this.setModalVisible(true)}}
-                    >
-                      <View style={styles.button}>
+            <View style={{flex:1, backgroundColor:'wheat',margin:5, width,alignItems:'flex-start'}}>
+                <TouchableOpacity style={styles.modal}
+                    onPress={() => alert(`ID: ${content.newsid}  \n${content.topic}`)} 
+                    onLongPress={()=>{this.activatePopupMenu(content)}}
+                >
+                    <View style={styles.button}>
                         <Text style={styles.topic}> 
-                            {item.key}. {item.topic}
+                            {content.topic}
                         </Text>
                         <Text style={styles.description}> 
-                            Koon zuloo, tammai Rao yungmai warp
+                            {content.description}
                         </Text>
-                      </View>
-                    </TouchableOpacity>
-                  }
-                />
-                
-                <Modal 
-                  animationType={'slide'} 
-                  transparent={false} 
-                  visible={this.state.modalVisible}
-                  onRequestClose={() => {alert("Modal has been closed.")}}
+                    </View>
+                </TouchableOpacity>
+
+                {/* <Modal 
+                    animationType={'slide'} 
+                    transparent={false} 
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {alert("Modal has been closed.")}}
                 >
-                  <View style={styles.modal}>
-                    <NewsDetail/> 
+                    <View style={styles.modal}>
+                    <NewsDetail detail={content} />
                     <Button 
-                      onPress={() => {this.setModalVisible(!this.state.modalVisible)}} 
-                      title="Hide Modal" 
+                        onPress={() => {this.setModalVisible(!this.state.modalVisible)}} 
+                        title="Hide Modal" 
                     />
-                  </View>
-                </Modal>
+                    </View>
+                </Modal> */}
 
 
                 {/*

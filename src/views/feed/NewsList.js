@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { View } from 'react-native'
+import { View, ListView } from 'react-native'
 import { styles } from '../../style'
 
 import NewsItem from './NewsItem'
@@ -17,18 +17,28 @@ class NewsList extends Component {
         }
     }
     */
+
+    renderRow(rowData, sectionID, rowID) {
+        let {onRemove} = this.props
+        return(
+            <NewsItem key={rowID} remove={onRemove} content={rowData} />
+        )
+    }
+
     render() {
-        let {items, onEdit, onDelete} = this.props
+        let {items} = this.props
+        
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+        const dataSource = ds.cloneWithRows(items.data)
 
         return(
             <View>
                 {/* <NewsItem /> */}
-                {items.map((newsfeed,i) => 
-                    <Views key={i}>
-                        <NewsItem content={newsfeed} edit={onEdit} remove={onDelete} />
-                    </Views>
-                    )
-                }
+                <ListView
+                    dataSource={dataSource}
+                    renderRow={this.renderRow.bind(this)}
+                />
+                    
             </View>
         )
     }

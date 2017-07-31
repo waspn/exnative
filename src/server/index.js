@@ -37,7 +37,7 @@ server.get('/feed/data', function(req, res, next) {
       {
         "newsid": 3,
         "topic": "Ddt Faee aaa",
-        "description": "Mpsiq vi Loas psiq ope"
+        "description": "Mpsiq vi Loas psifwa aagq ope"
       }
     ],
     code: 200,
