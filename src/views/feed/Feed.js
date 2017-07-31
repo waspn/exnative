@@ -13,18 +13,12 @@ class Login extends Component {
 
     constructor(props) {
         super(props)
-        this.editNews = this.editNews.bind(this)
         this.deleteNews = this.deleteNews.bind(this)
         this.fetchFeed = this.fetchFeed.bind(this)
     }
 
     componentDidMount() {
         this.fetchFeed()
-    }
-
-    
-    editNews(feed) {
-        this.props.feedActions.editFeed(feed)
     }
 
     deleteNews(key) {

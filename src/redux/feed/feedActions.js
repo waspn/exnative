@@ -1,5 +1,5 @@
 const internalpath = '../../data/data.json'
-const externalpath = 'http://localhost:3001/feed/'
+const externalpath = 'http://localhost:3001/feed/' //10.0.0.2 for android
 
 export const addFeedRequest = () => ({
   type: 'ADD_FEED_REQUEST'

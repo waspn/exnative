@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-import { Text, View, TextInput, Button, TouchableOpacity, TouchableHighlight, Alert, Modal, Dimensions } from 'react-native'
+import { Text, View, Button, TouchableOpacity, TouchableHighlight, Alert, Modal, Dimensions } from 'react-native'
+import { Actions } from 'react-native-router-flux'
+
 import { styles } from '../../style'
 import NewsDetail from './NewsDetail'
 
@@ -19,18 +21,9 @@ class NewsList extends Component {
                 description: ''
             }
         }
-        this.handleChange = this.handleChange.bind(this)
-        this.toggleEditFeed = this.toggleEditFeed.bind(this)
-        this.editFeed = this.editFeed.bind(this)
         this.deleteFeed = this.deleteFeed.bind(this)
     }
     
-    
-    toggleEditFeed()  {
-        this.setState({
-            isEditing: !this.state.isEditing
-        })
-    }
 
     handleChange = (propertyName, e) => {
         const {modified} = this.state
@@ -41,27 +34,13 @@ class NewsList extends Component {
         })
     }
 
-    editFeed() {
-        let {edit} = this.props
-        edit(this.state.modified)
-        this.setState({
-            isEditing: false
-        })
-    }
-
     deleteFeed() {
         let {remove,content} = this.props
         remove(content.newsid)
     }
     
 
-    setModalVisible(visible) {
-        this.setState({
-            modalVisible: visible
-        })
-    }
-
-    actionSheet(id) {
+    /*actionSheet(id) {
         const options = ['Edit', 'Delete', 'Cancel']
         ActionSheetIOS.showActionSheetWithOptions({
             options,
@@ -76,24 +55,16 @@ class NewsList extends Component {
                 }
             }
         )
-    }
+    }*/
 
     activatePopupMenu(content) {
-        // Alert.alert(
-        //     'MENU',
-        //     [
-        //         {text: 'Edit', onPress: () => alert(options[buttonIndex])},
-        //         {text: 'Cancel' , style: 'cancel'},
-        //         {text: 'Delete', onPress: this.deleteFeed(id)}
-        //     ]
-        // )
        Alert.alert(
             '',
             content.topic,
             [
-                {text: 'Edit', onPress: () => alert('Ask me later pressed')},
-                {text: 'Cancel', style: 'cancel'},
-                {text: 'Delete', onPress: () => this.deleteFeed(content.id)},
+                {text: 'Delete', onPress: () => this.deleteFeed()},
+                {text: 'Edit', onPress: () => Actions.newsedit({content:content})},
+                {text: 'Cancel', style: 'cancel'}
             ]
         )
     }
@@ -117,55 +88,6 @@ class NewsList extends Component {
                         </Text>
                     </View>
                 </TouchableOpacity>
-
-                {/* <Modal 
-                    animationType={'slide'} 
-                    transparent={false} 
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {alert("Modal has been closed.")}}
-                >
-                    <View style={styles.modal}>
-                    <NewsDetail detail={content} />
-                    <Button 
-                        onPress={() => {this.setModalVisible(!this.state.modalVisible)}} 
-                        title="Hide Modal" 
-                    />
-                    </View>
-                </Modal> */}
-
-
-                {/*
-                    <View className='well col-xs-12 space'>
-                    {
-                        this.state.isEditing ? 
-                        <View className='col-xs-9'>
-                            <input className='form-control' onChange={this.handleChange.bind(this,'topic')} defaultValue={content.topic} type='text' />
-                            <textarea className='form-control' onChange={this.handleChange.bind(this,'description')} defaultValue={content.description} type='text' rows='4'></textarea>
-                        </View>
-                        :
-                        <View className='col-xs-9'>
-                            <h4>{content.topic}</h4>
-                            <p>{content.description}</p>
-                        </View>
-                    }
-                        <View className='thumbnail col-xs-3'>
-                            <img src={imgurl} alt='sample' width='100%' height='100%' />
-                        </View>
-                    {
-                        this.state.isEditing ?
-                        <View className='col-xs-3'>
-                            <button onClick={this.toggleEditFeed} className='btn btn-default'><span className='glyphicon glyphicon-repeat'></span></button>
-                            <button onClick={this.editFeed} className='btn btn-success'><span className='glyphicon glyphicon-ok'></span></button>
-                        </View>
-                        :
-                        <View className='col-xs-3'>
-                            <button onClick={this.toggleEditFeed} className='btn btn-warning'><span className='glyphicon glyphicon-wrench'></span></button>
-                            <button onClick={this.deleteFeed} className='btn btn-danger'><span className='glyphicon glyphicon-remove'></span></button>
-                        </View>
-                    }
-                    </View>
-                    */}
-
             </View>   
             
         )
