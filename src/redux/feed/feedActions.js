@@ -16,7 +16,7 @@ export const addFeed = (payload) => (dispatch, getState) => {
   dispatch(addFeedRequest())
   const url = externalpath + 'create'
   console.log(payload)
-  fetch(url,{
+  return fetch(url,{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ export const editFeed = (payload) => (dispatch, getState) => {
   dispatch(editFeedRequest())
   const url = externalpath + 'update'
   console.log(payload)
-  fetch(url, {
+  return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ export const deleteFeed = (key) => (dispatch, getState) => {
   dispatch(deleteFeedRequest())
   const url = externalpath + 'delete'
   console.log(key)
-  fetch(url,{
+  return fetch(url,{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

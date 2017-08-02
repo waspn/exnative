@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
 	data: [],
 	isFetching: false,
 	error: false
