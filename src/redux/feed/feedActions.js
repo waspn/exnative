@@ -100,7 +100,7 @@ export const fetchFeed = () => (dispatch, getState) => {
     dispatch(fetchFeedRequest())
     const url = externalpath + 'data'
     console.log(url)
-    fetch(url)
+    return fetch(url)
         .then((res) => res.json())
         .then((res) => dispatch(fetchFeedSuccess(res.data)))
         .catch((error) => dispatch(fetchFeedFailure(error)))

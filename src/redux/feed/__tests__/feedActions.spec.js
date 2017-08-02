@@ -17,10 +17,39 @@ const postData = {
   description: "DESCRIPTION"
 }
 
+describe('test action' , () => {
+  it('deletesuccess', () => {
+    const received = feedAction.deleteFeedSuccess(postData.newsid)
+    const expected = {
+      type: 'DELETE_FEED_SUCCESS',
+      key: postData.newsid
+    }
+    expect(received).toEqual(expected)
+  })
+  it('deletefailed', () => {
+    const err = 'Have Error'
+    const received = feedAction.deleteFeedFailure(err)
+    const expected = {
+      type: 'DELETE_FEED_FAILURE',
+      error: err
+    }
+    expect(received).toEqual(expected)
+  })
+  it('deleterequest', () => {
+    const err = 'Have Error'
+    const received = feedAction.deleteFeedRequest()
+    const expected = {
+      type: 'DELETE_FEED_REQUEST',
+    }
+    expect(received).toEqual(expected)
+  })
+})
+
 describe('Test Asynchronous', () => {
   afterEach(() => {
     nock.cleanAll()
   })
+
   it('addFeed-success', () => {
     nock(routesfetch)
     .defaultReplyHeaders({
@@ -61,19 +90,77 @@ describe('Test Asynchronous', () => {
     .replyWithError('404')
 
     const expected = [
-      { "type": "ADD_FEED_REQUEST" },
       {
-        "error": new FetchError(404, 'request to http://localhost:3001/feed/create failed, reason: 404'),
+        "error": "request to http://localhost:3001/feed/create failed, reason: 404",
         "type": "ADD_FEED_FAILURE"
       }
     ]
+    
     const store = mockStore(initialState)
     return store.dispatch(feedAction.addFeed(postData))
+    .then(() => {
+      let received = store.getActions()
+      received = [{
+        "type": received[1].type,
+        "error": (received[1].error).message
+      }]
+      expect(received).toEqual(expected)
+    })
+  })
+
+
+  it('deleteFeed-success', () => {
+    nock(routesfetch)
+    .defaultReplyHeaders({
+      'Content-Type': 'application/json'
+    })
+    .post('/delete', postData.newsid)
+    .reply(200, JSON.stringify({
+      data: {
+       newsid: postData.newsid 
+      },
+      code: 200,
+      status: 'DELETE'
+    }))
+
+    const expected = [
+      
+    ]
+    
+    const store = mockStore(initialState)
+    return store.dispatch(feedAction.deleteFeed(postData.newsid))
     .then(() => {
       const received = store.getActions()
       expect(received).toEqual(expected)
     })
   })
+
+  it('deleteFeed-failure', () => {
+    nock(routesfetch)
+    .defaultReplyHeaders({
+      'Content-Type': 'application/json'
+    })
+    .post('/delete', postData)
+    .replyWithError('404')
+
+    const expected = [
+      {
+        "type": "DELETE_FEED_FAILURE",
+        "error": "request to http://localhost:3001/feed/data failed, reason: 404"
+      }
+    ]
+
+    const store = mockStore(initialState)
+    return store.dispatch(feedAction.deleteFeed(postData.newsid))
+    .then(() => {
+      let received = store.getActions()
+      received = [{
+        "type": received[1].type,
+        "error": (received[1].error).message
+      }]
+    })
+  })
+
 
   it('editFeed-success', () => {
     nock(routesfetch)
@@ -114,105 +201,72 @@ describe('Test Asynchronous', () => {
     .replyWithError('404')
 
     const expected = [
-      { "type": "EDIT_FEED_REQUEST" },
       {
-        "error": new FetchError(404, 'request to http://localhost:3001/feed/update failed, reason: 404'),
-        "type": "EDIT_FEED_FAILURE"
+        "type": "EDIT_FEED_FAILURE",
+        "error": "request to http://localhost:3001/feed/data failed, reason: 404"
       }
     ]
+
     const store = mockStore(initialState)
     return store.dispatch(feedAction.editFeed(postData))
     .then(() => {
-      const received = store.getActions()
-      expect(received).toEqual(expected)
+      let received = store.getActions()
+      received = [{
+        "type": received[1].type,
+        "error": (received[1].error).message
+      }]
     })
   })
 
-  it('deletesuccess', () => {
-    const received = fee
-  })
 
-/*  it('deleteFeed-success', () => {
+  it('fetchFeed-success', () => {
     nock(routesfetch)
-    .defaultReplyHeaders({
-      'Content-Type': 'application/json'
-    })
-    .post('/delete', postData.newsid)
+    .get('/data')
     .reply(200, JSON.stringify({
-      data: { 
-        newsid: postData.newsid 
-      },
+      data: postData,
       code: 200,
-      status: 'DELETE'
+      status: 'OK'
     }))
 
     const expected = [
-      
-    ]
+      {"type": "FETCH_FEED_REQUEST"}, 
+      {
+        "payload": {
+          "description": "DESCRIPTION", 
+          "newsid": 5, "topic": "TOPICNEWS"
+        }, 
+      "type": "FETCH_FEED_SUCCESS"
+    }]
 
     const store = mockStore(initialState)
-    return store.dispatch(feedAction.deleteFeed(postData.newsid))
+    return store.dispatch(feedAction.fetchFeed())
     .then(() => {
       const received = store.getActions()
-      console.log(received[0].type)
-      console.log(received[1].type)
-      console.log(received[0])
       expect(received).toEqual(expected)
     })
   })
-/*
-  it('deleteFeed-failure', () => {
+
+  it('fetchFeed-failure', () => {
     nock(routesfetch)
-    .defaultReplyHeaders({
-      'Content-Type': 'application/json'
-    })
-    .post('/delete', postData)
+    .get('/data')
     .replyWithError('404')
 
     const expected = [
-      { "type": "DELETE_FEED_REQUEST" },
       {
-        "error": new FetchError(404, 'request to http://localhost:3001/feed/delete failed, reason: 404'),
-        "type": "DELETE_FEED_FAILURE"
+        "type": "FETCH_FEED_FAILURE",
+        "error": "request to http://localhost:3001/feed/data failed, reason: 404"
       }
     ]
+
     const store = mockStore(initialState)
-    return store.dispatch(feedAction.editFeed(postData))
+    return store.dispatch(feedAction.fetchFeed())
     .then(() => {
-      const received = store.getActions()
+      let received = store.getActions()
+      received = [{
+        "type": received[1].type,
+        "error": (received[1].error).message
+      }]
       expect(received).toEqual(expected)
     })
   })
-*/
-
-
 })
-      
-
-  /*it('success', () => {
-    nock(routesfetch)
-    .defaultReplyHeaders({
-      'Content-Type': 'application/json'
-    })
-    .get()
-    .reply(200, JSON.stringify({
-      data: [
-        {
-          "newsid": 1,
-          "topic": "Feed Data",
-          "description": "Lorem ipsum vi calas opique"
-        },
-        {
-          "newsid": 2,
-          "topic": "Feed Dataaa",
-          "description": "Um vi cLorem ipsiqu alas ope"
-        },
-        {
-          "newsid": 3,
-          "topic": "Ddt Faee aaa",
-          "description": "Mpsiq vi Loas psifwa aagq ope"
-        }
-      ],
-      code: 200,
-      status: 'OK'
-    }))*/
