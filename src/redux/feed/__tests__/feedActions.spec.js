@@ -3,7 +3,6 @@ import nock from 'nock'
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 import fetch from 'isomorphic-fetch'
-import FetchError from 'fetch-error'
 import { initialState } from '../feedReducers'
 
 //create mock store
@@ -36,7 +35,6 @@ describe('test action' , () => {
     expect(received).toEqual(expected)
   })
   it('deleterequest', () => {
-    const err = 'Have Error'
     const received = feedAction.deleteFeedRequest()
     const expected = {
       type: 'DELETE_FEED_REQUEST',
@@ -114,25 +112,25 @@ describe('Test Asynchronous', () => {
     .defaultReplyHeaders({
       'Content-Type': 'application/json'
     })
-    .post('/delete', postData.newsid)
+    .post('/delete', { newsid: postData.newsid } )
     .reply(200, JSON.stringify({
       data: {
-       newsid: postData.newsid 
+        newsid: postData.newsid
       },
       code: 200,
       status: 'DELETE'
     }))
 
     const expected = [
-      
+      { type: 'DELETE_FEED_REQUEST' },
+      { type: 'DELETE_FEED_SUCCESS', key: 5 } 
     ]
-    
     const store = mockStore(initialState)
     return store.dispatch(feedAction.deleteFeed(postData.newsid))
     .then(() => {
       const received = store.getActions()
       expect(received).toEqual(expected)
-    })
+    }) 
   })
 
   it('deleteFeed-failure', () => {
@@ -140,7 +138,7 @@ describe('Test Asynchronous', () => {
     .defaultReplyHeaders({
       'Content-Type': 'application/json'
     })
-    .post('/delete', postData)
+    .post('/delete', { newsid: postData.newsid })
     .replyWithError('404')
 
     const expected = [
