@@ -10,7 +10,7 @@ const Login = () => {
     
       <TextInput returnKeyType={'default'} style={styles.input} placeholder="Username" />
       <TextInput returnKeyType={'default'} style={styles.input} secureTextEntry={true} password={true} placeholder="Password" />
-      <Button onPress={() => alert('Login')} title="Login"  />
+      <Button id='loginbtn' onPress={() => alert('Login')} title="Login"  />
 
       <Text style={styles.detail}>Forgot Password</Text>
       <Text style={styles.detail}>Sign Up</Text>
