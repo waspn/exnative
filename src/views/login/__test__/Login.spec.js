@@ -2,94 +2,18 @@ import React from 'react'
 import { View, Text, Button, TextInput } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { shallow } from 'enzyme'
-import { Actions } from '../../../__mocks__/react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
 import spyon from 'spyon'
 
 import Login from '../Login'
 
 jest.mock('react-native', () => {
-  const { View } = require.requireActual('react-native')
+  const { View, Text, Button, TextInput, StyleSheet  } = require.requireActual('react-native')
   return { 
-    View: 'View', 
-    Text: 'Text', 
-    Button: 'Button',
-    TextInput: 'TextInput',
+    View, Text, Button, TextInput, 
     StyleSheet: {
-      create: jest.fn(() => {
-        return {
-
-        }
-      }) 
+      create: jest.fn()
     }
-  }
-})
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    margin: 20
-  },
-  detailContainer: {
-    justifyContent: 'center'
-  },
-  header: {
-    fontSize: 25,
-    alignContent: 'center',
-    paddingVertical: 2,
-    borderBottomWidth: 2
-  },
-
-  btn: {
-    backgroundColor: 'wheat',
-    paddingVertical: 5,
-    margin:10,
-    paddingHorizontal: 15,
-    width:80
-  },
-  btnText: {
-    alignContent: 'flex-end',
-    color: 'white'
-  },
-  addbtn: {
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    alignSelf: 'flex-end',
-    alignContent: 'flex-end',
-    backgroundColor: 'lightgreen',
-    width: 40,
-    height: 40,
-    borderRadius: 40
-  },
-  addbtnText:{
-    fontSize: 25
-  },
-
-  input: {
-    width: 120, 
-    /*borderColor: 'gray', 
-    borderBottomWidth: 1*/
-  },
-
-  detail: {
-    fontSize: 10,
-    color: 'gray'
-  },
-
-  topic: {
-    fontSize: 20,
-    
-  },
-  description: {
-    fontSize: 12,
-  },
-
-  modal: {
-    flex:1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center'
   }
 })
 
@@ -99,7 +23,6 @@ describe('Test Login', () => {
   const wrapper = shallow(<Login />)
   console.log(wrapper)
   it('Header should appear', () => {
-    //console.log(wrapper.contains(<Text style={styles.header}>Login to REACT</Text>))
     const received = wrapper.contains(<Text style={styles.header}>Login to REACT</Text>)
     expect(received).toEqual(true)
   })
@@ -119,10 +42,4 @@ describe('Test Login', () => {
     expect(received).toEqual(true)
   })
 
-  /*it('Find Element', () => {
-    console.log(wrapper.find('Text').)
-  })
-  /*it('Login Button should work', () => {
-    const received = wrapper.
-  })*/
 })

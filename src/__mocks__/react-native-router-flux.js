@@ -1,7 +1,6 @@
 const Actions = {
-    pop: jest.fn(() => {
-      console.log('blablabla')
-    })
+    pop: jest.fn(),
+    newsedit: jest.fn()
   }
 export {
   Actions

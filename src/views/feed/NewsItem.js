@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, Button, TouchableOpacity, TouchableHighlight, Alert, Modal, Dimensions } from 'react-native'
+import { Text, View, Button, TouchableOpacity, TouchableHighlight, Alert, Dimensions } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { styles } from '../../style'
 
@@ -20,21 +20,16 @@ class NewsItem extends Component {
             }
         }
         this.deleteFeed = this.deleteFeed.bind(this)
+        this.actionNewsedit = this.actionNewsedit.bind(this)
     }
     
-
-    handleChange = (propertyName, e) => {
-        const {modified} = this.state
-        modified[propertyName] = e.target.value
-        
-        this.setState({
-            modified: modified
-        })
-    }
-
     deleteFeed() {
         let {remove,content} = this.props
         remove(content.newsid)
+    }
+
+    actionNewsedit(content) {
+        Actions.newsedit({content:content})
     }
 
     activatePopupMenu(content) {
@@ -42,8 +37,8 @@ class NewsItem extends Component {
             '',
             content.topic,
             [
-                {text: 'Delete', onPress: () => this.deleteFeed()},
-                {text: 'Edit', onPress: () => Actions.newsedit({content:content})},
+                {text: 'Delete', onPress: this.deleteFeed()},
+                {text: 'Edit', onPress: this.actionNewsedit(content) },
                 {text: 'Cancel', style: 'cancel'}
             ]
         )
@@ -51,11 +46,11 @@ class NewsItem extends Component {
 
     render() {
         let {content} = this.props
-        console.log(content)
+        //console.log(content)
         return(
             <View style={{flex:1, backgroundColor:'wheat',margin:5,alignItems:'flex-start'}}>
-                <TouchableOpacity style={styles.modal}
-                    onPress={() => alert(`ID: ${content.newsid}  \n${content.topic}`)} 
+                <TouchableOpacity id="touchable" style={styles.modal}
+                    //onPress={() => alert(`ID: ${content.newsid}  \n${content.topic}`)} 
                     onLongPress={()=>{this.activatePopupMenu(content)}} >
                     <View style={styles.button}>
                         <Text style={styles.topic}> 
