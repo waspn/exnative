@@ -5,6 +5,18 @@ import spyon from 'spyon'
 
 import NewsList from '../NewsList'
 
+jest.mock('react-native', () => {
+  const { Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions, StyleSheet, ListView } = require.requireActual('react-native')
+  return { 
+    Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions, StyleSheet, 
+    ListView : {
+      DataSource: {
+        rowHasChanged: jest.fn((r1,r2) => r1 !== r2 )
+      }
+    }
+  }
+})
+
 const testprop = {
   items: {
     data: [],
@@ -13,11 +25,10 @@ const testprop = {
   onRemove: jest.fn()
 }
 
-const testRender = (rowData, sectionID, rowID) => {
-  return {
-    key: rowID,
-    content: rowData
-  }
+const testcontent = {
+    newsid: 2,
+    description: 'adaawg',
+    topic: 'agaegag'
 }
 
 describe('Test News List', () => {
@@ -29,7 +40,8 @@ describe('Test News List', () => {
 
 
   it('should render row correctly', () => {
-    const inst = wrapper.renderer._instance
-    
+    const res = wrapper.find('ListView')
+    console.log(res)
   })
+
 })

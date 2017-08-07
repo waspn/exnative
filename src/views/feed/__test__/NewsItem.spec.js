@@ -2,7 +2,6 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, Alert }  from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { shallow } from 'enzyme'
-import spyon from 'spyon'
 import NewsItem from '../NewsItem'
 
 jest.mock('react-native', () => {

@@ -77,11 +77,11 @@ server.post('/feed/delete', function(req, res, next) {
     code: 200,
     status: 'DELETE'
   }
-  console.log(data)
+  //console.logdata)
   res.send(data)
 })
 
 
 server.listen(3001, () => {
-  console.log('JSON Server is running...')
+  //console.log'JSON Server is running...')
 })

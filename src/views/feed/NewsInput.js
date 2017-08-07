@@ -29,17 +29,8 @@ class NewsInput extends Component {
         })
     }
 
-    /*handleChange = (propertyName, e) => {
-        const {news} = this.state
-        news[propertyName] = e.target.defaultValue
-        
-        this.setState({
-            news: news
-        })
-    }*/
-
     addFeed() {
-        console.log(this.state.news)
+        //console.logthis.state.news)
         this.props.feedActions.addFeed(this.state.news)
         
         Actions.pop()

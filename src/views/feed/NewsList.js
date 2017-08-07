@@ -5,19 +5,7 @@ import { styles } from '../../style'
 import NewsItem from './NewsItem'
 
 class NewsList extends Component {
-    /*
-    constructor(props) {
-        super(props)
-        this.state = {
-            isEditing: false,
-            modified: {
-                topic: '',
-                description: ''
-            }
-        }
-    }
-    */
-
+ 
     renderRow(rowData, sectionID, rowID) {
         let {onRemove} = this.props
         return(

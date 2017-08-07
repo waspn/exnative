@@ -15,7 +15,7 @@ export const addFeedFailure = (error) => ({
 export const addFeed = (payload) => (dispatch, getState) => {
   dispatch(addFeedRequest())
   const url = externalpath + 'create'
-  console.log(payload)
+  //console.log(payload)
   return fetch(url,{
     method: 'POST',
     headers: {
@@ -42,7 +42,7 @@ export const editFeedFailure = (error) => ({
 export const editFeed = (payload) => (dispatch, getState) => {
   dispatch(editFeedRequest())
   const url = externalpath + 'update'
-  console.log(payload)
+  //console.logpayload)
   return fetch(url, {
     method: 'POST',
     headers: {
@@ -69,7 +69,7 @@ export const deleteFeedFailure = (error) => ({
 export const deleteFeed = (key) => (dispatch, getState) => {
   dispatch(deleteFeedRequest())
   const url = externalpath + 'delete'
-  console.log(key)
+  //console.logkey)
   return fetch(url,{
     method: 'POST',
     headers: {
@@ -99,7 +99,7 @@ export const fetchFeedFailure = (error) => ({
 export const fetchFeed = () => (dispatch, getState) => { 
     dispatch(fetchFeedRequest())
     const url = externalpath + 'data'
-    console.log(url)
+    //console.logurl)
     return fetch(url)
         .then((res) => res.json())
         .then((res) => dispatch(fetchFeedSuccess(res.data)))

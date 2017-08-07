@@ -33,7 +33,7 @@ class NewsEdit extends Component {
     }
 
     editFeed() {
-        console.log(this.state.news)
+        //console.logthis.state.news)
         this.props.feedActions.editFeed(this.state.news)
         
         Actions.pop()

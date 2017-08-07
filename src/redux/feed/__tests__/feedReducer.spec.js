@@ -120,7 +120,7 @@ describe('Test FeedReducers', () => {
 
   it('Initial param', () => {
     const received = feedReducers(undefined,feedActions.fetchFeedRequest())
-    console.log(received)
+    //console.log(received)
   })
     
   it(`${feedActions.addFeedRequest().type}`, () => {

@@ -21,7 +21,7 @@ jest.mock('react-native', () => {
 
 describe('Test Login', () => {
   const wrapper = shallow(<Login />)
-  console.log(wrapper)
+  //console.logwrapper)
   it('Header should appear', () => {
     const received = wrapper.contains(<Text style={styles.header}>Login to REACT</Text>)
     expect(received).toEqual(true)
@@ -38,7 +38,7 @@ describe('Test Login', () => {
       <TextInput returnKeyType={'default'} style={styles.input} placeholder="Username" />,
       <TextInput returnKeyType={'default'} style={styles.input} secureTextEntry={true} password={true} placeholder="Password" />
     ])
-    console.log(received)
+    //console.logreceived)
     expect(received).toEqual(true)
   })
 
