@@ -10,15 +10,6 @@ const Home = () => {
       
       <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius erat nec cursus elementum. Nunc sagittis egestas nunc id convallis.</Text>
       
-      {/* <TouchableOpacity onPress={()=>Actions.login()} style={styles.btn}>
-         <Text style={styles.btntext}>Login </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>Actions.feed()} style={styles.btn}>
-         <Text style={styles.btntext}>Feed </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>Actions.about()} style={styles.btn}>
-         <Text style={styles.btntext}>About </Text>
-      </TouchableOpacity> */}
       <View style={{flex:1,flexDirection:'row',alignItems:'flex-end', justifyContent:'space-around' }} >
         <Button onPress={()=>Actions.login()} title='Login' />
         <Button onPress={()=>Actions.feed()} title='Feed ' />

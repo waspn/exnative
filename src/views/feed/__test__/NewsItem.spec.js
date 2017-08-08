@@ -1,13 +1,18 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet, Alert }  from 'react-native'
+import { TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { shallow } from 'enzyme'
 import NewsItem from '../NewsItem'
 
 jest.mock('react-native', () => {
   const { Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions, StyleSheet } = require.requireActual('react-native')
-  return { 
-    Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions, StyleSheet,
+  return {
+    Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions,
+    StyleSheet: {
+      create: jest.fn(() => {
+        { }
+      })
+    },
     Alert: {
       alert: jest.fn((title, message, select) => {
         return select
@@ -18,17 +23,17 @@ jest.mock('react-native', () => {
 
 const testprop = {
   remove: jest.fn((key) => key),
-  content:{
+  content: {
     newsid: 2,
     description: 'adaawg',
-    topic: 'agaegag' 
+    topic: 'agaegag'
   }
 }
 
 const select = [
-  {text: 'Delete' },
-  {text: 'Edit', onPress: Actions.newsedit()},
-  {text: 'Cancel', style: 'cancel'}
+  { text: 'Delete' },
+  { text: 'Edit', onPress: Actions.newsedit() },
+  { text: 'Cancel', style: 'cancel' }
 ]
 
 const activatePopupMenu = (content) => {
@@ -51,7 +56,7 @@ describe('Test newsitem', () => {
     const received = wrapper.find('#touchable').simulate('LongPress')
     expect(Alert.alert).toHaveBeenCalledTimes(1)
   })
-  
+
   it('should remove working', () => {
     let inst = wrapper.renderer._instance
     let recieved = inst.props.remove(inst.props.content.newsid)

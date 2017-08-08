@@ -22,7 +22,7 @@ class NewsList extends Component {
         return(
             <View>
                 {/* <NewsItem /> */}
-                <ListView
+                <ListView id="listview"
                     dataSource={dataSource}
                     renderRow={this.renderRow.bind(this)}
                 />

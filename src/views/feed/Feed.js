@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import { View , Text, Button } from 'react-native'
+import React, { Component } from 'react'
+import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Actions } from 'react-native-router-flux'
@@ -9,44 +9,44 @@ import * as feedActions from '../../redux/feed/feedActions'
 
 import NewsList from './NewsList'
 
-class Login extends Component {
+export class Feed extends Component {
 
-    constructor(props) {
-        super(props)
-        this.deleteNews = this.deleteNews.bind(this)
-        this.fetchFeed = this.fetchFeed.bind(this)
-    }
+  constructor(props) {
+    super(props)
+    this.deleteNews = this.deleteNews.bind(this)
+    this.fetchFeed = this.fetchFeed.bind(this)
+  }
 
-    componentDidMount() {
-        this.fetchFeed()
-    }
+  componentDidMount() {
+    this.fetchFeed()
+  }
 
-    deleteNews(key) {
-        this.props.feedActions.deleteFeed(key)
-    }
+  deleteNews(key) {
+    this.props.feedActions.deleteFeed(key)
+  }
 
-    fetchFeed() {
-        this.props.feedActions.fetchFeed()
-    }
+  fetchFeed() {
+    this.props.feedActions.fetchFeed()
+  }
 
-    render() {
-      const {feed} = this.props
-      return(
-        <View style={styles.container}>
+  render() {
+    const { feed } = this.props
+    return (
+      <View style={styles.container}>
 
-          <Text style={styles.header}>News Feed</Text>
+        <Text style={styles.header}>News Feed</Text>
 
-          { feed.isFetchong ? <Text> Loading... </Text> : <Text></Text>}
-          { !feed.data.length ? 
-            <Text> ERROR : Cannot fetch newsfeed </Text> : 
-            <NewsList items={feed} onRemove={this.deleteNews} /> 
-          }
+        {feed.isFetching ? <Text> Loading... </Text> : <Text></Text>}
+        {!feed.data.length ?
+          <Text> ERROR : Cannot fetch newsfeed </Text> :
+          <NewsList items={feed} onRemove={this.deleteNews} />
+        }
 
-					<Button onPress={()=>Actions.newsinput()} title="Add New Feed + " />
+        <Button onPress={() => Actions.newsinput()} title="Add New Feed + " />
 
-        </View> 
-      )
-    }
+      </View>
+    )
+  }
 
 }
 
@@ -63,6 +63,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Login)
+  mapStateToProps,
+  mapDispatchToProps
+)(Feed)
