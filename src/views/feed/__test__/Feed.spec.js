@@ -7,9 +7,11 @@ import { Feed } from '../Feed'
 
 //create mock store
 
-const feed = {
-	data: [],
-	isFetching: false,
+const testState = {
+	feed: {
+		data: [1,2,3],
+		isFetching: true,
+	}
 }
 
 const testPropToDispatch = {
@@ -20,21 +22,22 @@ const testPropToDispatch = {
 }
 
 describe('Test NewsInput', () => {
-	// const wrapper = shallow(<Feed />)
-	// it('render correctly', () => {
-	// 	const received = wrapper.length
-	// 	expect(received).toEqual(1)
-	// })
-
-	it('should map state to prop correctly', () => {
-
+	const wrapper = shallow(<Feed {...testState} />)
+	it('render correctly', () => {
+		const received = wrapper.length
+		expect(received).toEqual(1)
 	})
-	it('should dispatch to action correctly', () => {
 
+	it('should fetch news feed', () => {
+		
+	})
+	it('should add news when press', () => {
+		const received = wrapper.find('Button').simulate('Press')
+		expect(Actions.newsinput).toHaveBeenCalledTimes(1)
 	})
 	it('should do fetch feed when loaded', () => {
-		const wrapper = shallow(<Feed {...feed} />)
-		console.log(wrapper)
+	
+		
 	})
 
 	// it('should go to newsinput when press button', () => {
