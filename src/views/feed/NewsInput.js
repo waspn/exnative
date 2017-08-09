@@ -36,7 +36,7 @@ export class NewsInput extends Component {
     Actions.pop()
   }
 
-  textChanged(text, type = topic) {
+  textChanged(text, type = 'topic') {
     if (type === 'description') {
       this.setState({
         news: {

@@ -2,17 +2,13 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet, Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { shallow } from 'enzyme'
+
 import NewsItem from '../NewsItem'
 
 jest.mock('react-native', () => {
-  const { Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions, StyleSheet } = require.requireActual('react-native')
+  const { Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions, StyleSheet, Alert } = require.requireActual('react-native')
   return {
-    Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions,
-    StyleSheet: {
-      create: jest.fn(() => {
-        { }
-      })
-    },
+    Text, View, Button, TouchableOpacity, TouchableHighlight, Dimensions, StyleSheet,
     Alert: {
       alert: jest.fn((title, message, select) => {
         return select
@@ -58,16 +54,9 @@ describe('Test newsitem', () => {
   })
 
   it('should remove working', () => {
-    let inst = wrapper.renderer._instance
-    let recieved = inst.props.remove(inst.props.content.newsid)
+    const inst = wrapper.renderer._instance
+    const recieved = inst.props.remove(inst.props.content.newsid)
     expect(recieved).toEqual(inst.props.content.newsid)
   })
 
-  // unfinished
-  /*it('should edit redirect correctly', () => {
-    let inst = wrapper.renderer._instance
-    inst.actionNewsedit = spyon(inst.actionNewsedit)
-    
-  })
-  */
 })

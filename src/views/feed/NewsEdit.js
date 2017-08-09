@@ -33,7 +33,7 @@ export class NewsEdit extends Component {
     })
   }
 
-  textChanged(text, type = topic) {
+  textChanged(text, type = 'topic') {
     if (type === 'description') {
       this.setState({
         news: {
@@ -67,13 +67,13 @@ export class NewsEdit extends Component {
         <TextInput
           placeholder='Topic'
           autoFocus={true}
-          onChangeText={textChanged(topic, 'topic')}
+          onChangeText={this.textChanged(topic, 'topic')}
           value={this.state.news.topic} />
         <TextInput
           multiline={true}
           numberOfLines={4}
           placeholder='Description'
-          onChangeText={textChanged(desscription, 'desscription')}
+          onChangeText={this.textChanged(description, 'description')}
           value={this.state.news.description} />
 
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-around' }}>

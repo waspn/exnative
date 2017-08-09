@@ -36,9 +36,9 @@ export class Feed extends Component {
 
         <Text style={styles.header}>News Feed</Text>
 
-        {feed.isFetching ? <Text> Loading... </Text> : <Text></Text>}
+        {feed.isFetching ? <Text id='loading'> Loading... </Text> : <Text id='none'></Text>}
         {!feed.data.length ?
-          <Text> ERROR : Cannot fetch newsfeed </Text> :
+          <Text id='error'> ERROR : Cannot fetch newsfeed </Text> :
           <NewsList items={feed} onRemove={this.deleteNews} />
         }
 
